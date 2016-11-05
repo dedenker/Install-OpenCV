@@ -30,7 +30,11 @@ source dependencies.sh
 echo "--- Downloading OpenCV" $version
 mkdir -p $dldir
 cd $dldir
-wget -c -O $downloadfile http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/$version/$downloadfile/download
+if [ ! -f $downloadfile ]; then
+    echo "Downloading OpenCV" $version
+    wget -O $downloadfile http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/$version/$downloadfile/download
+fi
+#wget -c -O $downloadfile http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/$version/$downloadfile/download
 
 echo "--- Installing OpenCV" $version
 echo $downloadfile | grep ".zip"
@@ -42,7 +46,8 @@ fi
 cd opencv-$version
 mkdir build
 cd build
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=OFF -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=OFF -D INSTALL_PYTHON_EXAMPLES=OFF -D BUILD_EXAMPLES=OF -D WITH_QT=ON -D WITH_OPENGL=ON -D BUILD_DOCS=OFF -D OPENCV_EXTRA_MODULES_PATH=/home/ec2-user/opencv_contrib/modules BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF BUILD_PERF_TESTS=OFF ..
+#cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=OFF -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=OFF -D INSTALL_PYTHON_EXAMPLES=OFF -D BUILD_EXAMPLES=OF -D WITH_QT=ON -D WITH_OPENGL=ON -D BUILD_DOCS=OFF -D OPENCV_EXTRA_MODULES_PATH=/home/ec2-user/opencv_contrib/modules BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF BUILD_PERF_TESTS=OFF ..
+cmake   -D BUILD_DOCS=OFF -D OPENCV_EXTRA_MODULES_PATH=/home/ec2-user/opencv_contrib/modules -D CMAKE_BUILD_TYPE=RELEASE -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF  -D BUILD_EXAMPLES=OFF -D INSTALL_PYTHON_EXAMPLES=OFF -D CMAKE_INSTALL_PREFIX=/usr/local ..
 make -j 4
 sudo make install
 sudo sh -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
