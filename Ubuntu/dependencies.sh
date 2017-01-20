@@ -22,7 +22,7 @@ install_dependency libavformat-dev
 install_dependency libswscale-dev
 install_dependency libdc1394-22-dev
 install_dependency libxine2-dev
-install_dependency libgstreamer0.10-dev
+install_dependency libgstreamer0.10
 install_dependency libgstreamer-plugins-base0.10-dev
 install_dependency libv4l-dev
 install_dependency python-dev
